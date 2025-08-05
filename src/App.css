@@ -1,0 +1,201 @@
+
+*{
+  margin: 0;
+  padding: 0;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #222831;
+  color: white;
+  overflow: hidden;
+}
+
+.main{
+  display: flex;
+  /* align-items: center; */
+  justify-content: space-between;
+  height: calc(100vh - 90px);
+}
+
+.main .left{
+  margin: 0 10px;
+  height: 93%;
+  width: 50%;
+  color: #222831;
+}
+
+.tabs{
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn{
+  gap: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btnNormal{
+  min-width: 120px;
+  background-color: #393E46;
+  padding: 10px;
+  color: white;
+  border-radius: 5px;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  transition: all;
+
+}
+
+.btnNormal:hover{
+  background-color: #393e46af;
+}
+
+
+.main .right{
+  padding: 0 20px;
+  height: 100%;
+  width: 50%;
+  color: white;
+  overflow: scroll;
+  line-height: 20px;
+}
+
+
+.topTab{
+  /* height: 60px; */
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.078);
+}
+
+.topTab p{
+  text-align: center;
+  font-size: 25px; 
+}
+
+body.dark .topTab .p{
+  /* background-color: white; */
+  color: white;
+}
+
+body.light .topTab {
+  /* background-color: #f4f4f4; */
+  color: black;
+}
+
+.right li{
+  color: grey;
+}
+
+p{
+  margin-top: 10px;
+  padding-top: 10px;
+  color: grey;
+}
+
+p > strong{
+  font-size: 20px;
+  color: white;
+}
+
+body.dark strong{
+  /* background-color: white; */
+  color: white;
+}
+
+body.light strong, h3{
+  /* background-color: #f4f4f4; */
+  color: grey;
+}
+
+body.dark h3{
+  color: white;
+}
+
+hr{
+  margin: 20px 0;
+}
+
+ul li{
+  margin-top: 10px;
+  /* padding-top: 10px; */
+  color: grey;
+}
+
+li strong{
+  color: white;
+}
+
+pre{
+  background-color: #1f1f1f;
+  padding: 10px;
+  
+}
+
+/* scrollbar  */
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #0b0b0b;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #222831;
+}
+
+
+/* Theme changer */
+
+/* Default dark theme */
+body.dark {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* Light theme override */
+body.light {
+  background-color: #f5f5f5;
+  color: #1f1f1f;
+}
+
+/* Optional: Editor, Select, etc., may need individual styling */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background-color: inherit;
+  color: inherit;
+}
+
+body.light {
+  background-color: #f8f8f8;
+  color: #1a1a1a;
+}
+
+body.dark {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.main {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
