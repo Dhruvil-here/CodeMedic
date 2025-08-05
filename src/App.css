@@ -61,6 +61,7 @@ body{
 
 
 .main .right{
+  font-size: 15px;
   padding: 0 20px;
   height: 100%;
   width: 50%;
@@ -97,12 +98,12 @@ body.light .topTab {
 
 p{
   margin-top: 10px;
-  padding-top: 10px;
+  /* padding-top: 10px; */
   color: grey;
 }
 
-p > strong{
-  font-size: 20px;
+p strong{
+  font-size: 18px;
   color: white;
 }
 
@@ -126,8 +127,10 @@ hr{
 
 ul li{
   margin-top: 10px;
-  /* padding-top: 10px; */
   color: grey;
+}
+li{
+  margin-top: 10px;
 }
 
 li strong{
@@ -135,6 +138,7 @@ li strong{
 }
 
 pre{
+  margin: 10px 0;
   background-color: #1f1f1f;
   padding: 10px;
   

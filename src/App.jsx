@@ -110,7 +110,7 @@ Your job is to deeply review this code and provide the following:
 3️⃣ A clear explanation of what the code does, step by step.
 4️⃣ A list of any potential bugs or logical errors, if found.
 5️⃣ Identification of syntax errors or runtime errors, if present.
-6️⃣ Solutions and recommendations on how to fix each identified issue.
+6️⃣ Solutions and recommendations on how to fix each identified issue. {in the best possible syntax and proper gaps in between }
 
 Analyze it like a senior developer reviewing a pull request.
 
