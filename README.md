@@ -19,7 +19,7 @@ CodeMedic is an intelligent code review and debugging tool powered by Google's G
 
 ## 📸 Screenshots
 
-*(Add screenshots or a demo GIF here if available)*
+<img width="1918" height="935" alt="codemedic" src="https://github.com/user-attachments/assets/c5f0ef4f-d988-4f73-8d4a-fe4fb9f72ee2" />
 
 ---
 
