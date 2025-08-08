@@ -58,7 +58,7 @@ function App() {
       ...base,
       backgroundColor: "#2c2c2c",
       color: "#fff",
-      width: "200%",
+      // width: "200%",
     }),
     option: (base, state) => ({
       ...base,
@@ -190,13 +190,29 @@ ${code}`,
             onChange={(e) => {
               setCode(e);
             }}
+            options={{
+              fontFamily: "Fira Code, Consolas, 'Courier New', monospace",
+              fontLigatures: true,
+              fontSize: 16,
+              suggest: {
+                maxVisibleSuggestions: 80,
+              },
+              quickSuggestions: true,
+              suggestOnTriggerCharacters: true,
+              wordBasedSuggestions: true,
+              renderLineHighlight: "all",
+              renderWhitespace: "all",
+              minimap: { enabled: false },
+              // 🔽 Fix rendering issue
+              fixedOverflowWidgets: true,
+            }}
           />
           ;
         </div>
 
         <div className="right">
           <div className="topTab">
-            <p>Response</p>
+            <p>Response :</p>
           </div>
 
           {loading && (

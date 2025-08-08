@@ -7,7 +7,7 @@ function Navbar({ toggleTheme, currentTheme }) {
     <>
       <div className="nav">
         <div className="logo">CodeMedic
-          <Bot Landmark size={50} color='#CC66DA'/>
+          <Bot Landmark size={50} color='#00ADB5'/>
         </div>
 
         <div onClick={toggleTheme} className="icon">
