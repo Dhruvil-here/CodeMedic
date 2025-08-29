@@ -13,11 +13,14 @@
     "@google/genai": "^1.13.0",
     "@monaco-editor/react": "^4.7.0",
     "lucide-react": "^0.536.0",
+    "particles.js": "^2.0.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-markdown": "^10.1.0",
     "react-select": "^5.10.2",
     "react-spinners": "^0.17.0",
+    "react-tsparticles": "^2.12.2",
+    "tsparticles": "^3.9.1",
     "vite-plugin-monaco-editor": "^1.1.0"
   },
   "devDependencies": {

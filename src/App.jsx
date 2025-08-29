@@ -8,6 +8,7 @@ import ReactMarkdown from "react-markdown";
 import { PacmanLoader } from "react-spinners";
 import { Pointer, TextCursor } from "lucide-react";
 
+
 function App() {
   const [theme, setTheme] = useState("dark");
 
@@ -139,10 +140,13 @@ ${code}`,
     setLoading(false);
   }
 
-  const [selectedOption, setSelectedOption] = useState(options[0]);
+  const [selectedOption, setSelectedOption] = useState(
+    options[0] ?? { value: "javascript", label: "JavaScript" }
+  );
 
   return (
     <>
+     
       <Navbar toggleTheme={toggleTheme} currentTheme={theme} />
       <div className="main">
         <div className="left">
@@ -183,7 +187,8 @@ ${code}`,
             </div>
           </div>
           <Editor
-            height="100%"
+            className="editor"
+            height="75vh"
             theme={theme === "dark" ? "vs-dark" : "light"}
             language={selectedOption.value}
             value={code}
@@ -207,7 +212,6 @@ ${code}`,
               fixedOverflowWidgets: true,
             }}
           />
-          ;
         </div>
 
         <div className="right">

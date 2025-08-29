@@ -8,11 +8,12 @@
 
 /* Body Styling */
 body {
-  background-color: #222831;
+  background-color: #000000;
   color: #fff;
   /* overflow: hidden;  */
   overflow-y: auto;
   transition: 0.3s ease, color 0.3s ease;
+  -webkit-overflow-scrolling: touch; 
 }
 
 body.light {
@@ -28,21 +29,33 @@ body.light {
   height: calc(100vh - 90px);
   padding: 10px 20px;
   transition: 0.3s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .left, .right {
   width: 50%;
   padding: 20px;
   overflow-y: auto;
+  position: relative;
+  z-index: 1;
 }
 
 /* Left Panel */
 .left {
-  background-color: #393E46;
+  overflow-y: hidden;
+  background: rgba(57, 62, 70, 0.3); /* transparent dark */
   border-radius: 8px;
   margin-right: 10px;
   color: white;
+
+   /* Glassmorphism */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
 }
+
+
 
 /* Tabs & Buttons */
 .tabs {
@@ -79,10 +92,15 @@ body.light {
 
 /* Right Panel */
 .right {
-  background-color: #1f1f1f;
+   background: rgba(31, 31, 31, 0.3); /* transparent dark */
   border-radius: 8px;
   font-size: 15px;
   line-height: 1.6;
+
+  /* Glassmorphism */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
 }
 
 .right p,
@@ -147,6 +165,7 @@ body {
     height: auto;
   }
   .left, .right {
+    min-height: 300px;
     width: 100%;
     margin: 10px 0;
   }
@@ -162,6 +181,7 @@ body {
 
 @media (max-width: 480px) {
   .btnNormal {
+    
     font-size: 14px;
     padding: 8px 12px;
   }
@@ -178,3 +198,74 @@ body {
     font-size: 13px;
   }
 }
+
+
+
+
+
+/* === Dark Mode (default) === */
+/* .left {
+  background-color: #393E46;
+  color: white;
+}
+
+.right {
+  background-color: #1f1f1f;
+  color: #ccc;
+}
+
+.btnNormal {
+  background-color: #00ADB5;
+  color: white;
+} */
+
+/* === Light Mode Overrides === */
+body.light .left {
+  background-color: #969696;
+  color: #1a1a1a;
+}
+
+body.light .right {
+  background-color: #969696;
+  color: #333;
+}
+
+body.light .btnNormal {
+  background-color: #007b83; /* darker teal for light mode */
+  color: white;
+}
+
+body.light .btnNormal:hover {
+  background-color: #009aa5;
+}
+
+body.light .topTab p{
+  color: #1f1f1f;
+}
+
+body.light .right p,
+body.light .right li {
+  color: #1f1f1f;
+  margin: 10px 0;
+}
+
+body.light.right p strong,
+body.light .right li strong {
+  color: #1f1f1f;
+  font-size: 16px;
+}
+
+body.light .right h3 {
+  color: #FFD369;
+  margin-top: 20px;
+}
+
+body.light pre {
+  background-color: #c9c7c7;
+  padding: 10px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+
+
