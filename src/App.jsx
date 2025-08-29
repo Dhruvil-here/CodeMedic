@@ -7,6 +7,7 @@ import { GoogleGenAI } from "@google/genai";
 import ReactMarkdown from "react-markdown";
 import { PacmanLoader } from "react-spinners";
 import { Pointer, TextCursor } from "lucide-react";
+import ParticlesBackground from "./Components/ParticlesBackground";
 
 
 function App() {
@@ -148,6 +149,8 @@ ${code}`,
     <>
      
       <Navbar toggleTheme={toggleTheme} currentTheme={theme} />
+      <ParticlesBackground theme={theme} />
+
       <div className="main">
         <div className="left">
           <div className="tabs">

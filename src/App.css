@@ -50,7 +50,7 @@ body.light {
   color: white;
 
    /* Glassmorphism */
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
 }
@@ -98,8 +98,8 @@ body.light {
   line-height: 1.6;
 
   /* Glassmorphism */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(5px);
+  /* -webkit-backdrop-filter: blur(10px); */
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
 }
 
@@ -203,30 +203,14 @@ body {
 
 
 
-/* === Dark Mode (default) === */
-/* .left {
-  background-color: #393E46;
-  color: white;
-}
-
-.right {
-  background-color: #1f1f1f;
-  color: #ccc;
-}
-
-.btnNormal {
-  background-color: #00ADB5;
-  color: white;
-} */
-
 /* === Light Mode Overrides === */
 body.light .left {
-  background-color: #969696;
+  background-color: #9696967b;
   color: #1a1a1a;
 }
 
 body.light .right {
-  background-color: #969696;
+  background-color: #9696967b;
   color: #333;
 }
 
