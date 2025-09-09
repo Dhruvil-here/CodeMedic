@@ -1,52 +1,66 @@
+/* ========================
+   Navbar Container
+======================== */
 .nav { 
-  padding: 0 20px;
+  padding: 0 20px; /* Horizontal padding */
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Logo on left, icon on right */
   align-items: center;
-  height: 70px;
-  background-color: #393e4663;
-  backdrop-filter: blur(5px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  position: sticky;
+  height: 70px; /* Navbar height */
+  background-color: #393e4663; /* Semi-transparent background */
+  backdrop-filter: blur(5px); /* Glass effect */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Shadow under navbar */
+  position: sticky; /* Stay fixed at top */
   top: 0;
-  z-index: 999;
+  z-index: 999; /* Keep above everything */
 }
 
+/* ========================
+   Logo Section
+======================== */
 .logo {
   display: flex;
   align-items: center;
   font-size: 26px;
   font-weight: bold;
-  gap: 10px;
+  gap: 10px; /* Space between text & icon */
   color: #fff;
 }
 
+/* If logo uses an <img> */
 .logo img {
   height: 40px;
   width: 40px;
-  object-fit: contain;
+  object-fit: contain; /* Prevent image distortion */
 }
 
+/* ========================
+   Theme Toggle Icon
+======================== */
 .icon {
   cursor: pointer;
   font-size: 24px;
-  color: #ffffff;
-  transition: transform 0.2s ease;
+  color: currentColor; /* ✅ Uses text color dynamically */
+  transition: 0.2s ease, color 0.3s ease; /* Smooth hover & theme color */
 }
 
 .icon:hover {
-  transform: scale(1.1);
-  color: #00ADB5;
+  transform: scale(1.1); /* Slight zoom effect */
+  color: #00ADB5; /* Teal hover color */
 }
 
-/* Responsive Adjustments */
+/* ========================
+   Responsive Adjustments
+======================== */
+
+/* Tablets & small laptops */
 @media (max-width: 768px) {
   .nav {
-    padding: 0 15px;
+    padding: 0 15px; /* Reduce padding */
   }
 
   .logo {
-    font-size: 22px;
+    font-size: 22px; /* Slightly smaller text */
   }
 
   .icon {
@@ -54,23 +68,24 @@
   }
 }
 
+/* Mobile phones */
 @media (max-width: 480px) {
   .nav {
-    height: 60px;
+    height: 60px; /* Smaller navbar */
   }
 
   .logo {
-    font-size: 20px;
+    font-size: 20px; /* Smaller logo text */
     gap: 8px;
   }
 
   .icon {
     font-size: 20px;
-    padding-right: 10px;
+    padding-right: 10px; /* Add spacing on right */
   }
 
   .logo img {
     height: 30px;
-    width: 30px;
+    width: 30px; /* Smaller logo image */
   }
 }

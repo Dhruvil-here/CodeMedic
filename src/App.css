@@ -1,63 +1,109 @@
-/* Base Reset */
+/* ========================
+   1. Base Reset
+======================== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
 }
 
-/* Body Styling */
+/* ========================
+   2. Body & Theme
+======================== */
 body {
-  background-color: #000000;
-  color: #fff;
-  /* overflow: hidden;  */
+  background-color: #000000; /* Dark mode background */
+  color: #fff; /* Default text color */
   overflow-y: auto;
-  transition: 0.3s ease, color 0.3s ease;
-  -webkit-overflow-scrolling: touch; 
+  transition: 0.3s ease, color 0.3s ease; /* Smooth transition on theme switch */
+  -webkit-overflow-scrolling: touch; /* Smooth mobile scrolling */
 }
 
 body.light {
-  background-color: #f8f8f8;
-  color: #1a1a1a;
+  background-color: #f8f8f8; /* Light background */
+  color: #1a1a1a; /* Dark text */
 }
 
-/* Layout */
+/* ========================
+   3. Layout
+======================== */
 .main {
   display: flex;
-  flex-direction: row;
+  flex-direction: row; /* Horizontal split */
   justify-content: space-between;
-  height: calc(100vh - 90px);
+  height: calc(100vh - 90px); /* Full height minus navbar */
   padding: 10px 20px;
-  transition: 0.3s ease;
   position: relative;
   z-index: 1;
+  transition: 0.3s ease;
 }
 
-.left, .right {
-  width: 50%;
+.left,
+.right {
+  width: 50%; /* Split screen in half */
   padding: 20px;
   overflow-y: auto;
   position: relative;
   z-index: 1;
 }
 
-/* Left Panel */
+/* ========================
+   4. Left Panel
+======================== */
 .left {
-  overflow-y: hidden;
-  background: rgba(57, 62, 70, 0.3); /* transparent dark */
+  overflow-y: hidden; /* Prevent internal scroll */
+  background: rgba(57, 62, 70, 0.3); /* Semi-transparent */
   border-radius: 8px;
   margin-right: 10px;
   color: white;
 
-   /* Glassmorphism */
+  /* Glassmorphism effect */
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
 }
 
+/* ========================
+   5. Right Panel
+======================== */
+.right {
+  background: rgba(31, 31, 31, 0.3);
+  border-radius: 8px;
+  font-size: 15px;
+  line-height: 1.6;
 
+  /* Glassmorphism */
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+}
 
-/* Tabs & Buttons */
+.right p,
+.right li {
+  color: #ccc; /* Light text */
+  margin: 10px 0;
+}
+
+.right p strong,
+.right li strong {
+  color: white; /* Highlight */
+  font-size: 16px;
+}
+
+.right h3 {
+  color: #FFD369; /* Yellow headings */
+  margin-top: 20px;
+}
+
+pre {
+  background-color: #141414; /* Code block background */
+  padding: 10px;
+  border-radius: 4px;
+  overflow-x: auto; /* Horizontal scroll */
+}
+
+/* ========================
+   6. Tabs & Buttons
+======================== */
 .tabs {
   display: flex;
   justify-content: space-between;
@@ -65,7 +111,7 @@ body.light {
   margin-bottom: 20px;
 }
 
-.topTab p{
+.topTab p {
   font-size: 20px;
   font-weight: bold;
 }
@@ -77,66 +123,32 @@ body.light {
 
 .btnNormal {
   min-width: 120px;
-  background-color: #00ADB5;
+  background-color: #00ADB5; /* Teal button */
   color: white;
   padding: 10px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition:  0.3s;
+  transition: 0.3s;
 }
 
 .btnNormal:hover {
-  background-color: #00adb5c9;
+  background-color: #00adb5c9; /* Hover effect */
 }
 
-/* Right Panel */
-.right {
-   background: rgba(31, 31, 31, 0.3); /* transparent dark */
-  border-radius: 8px;
-  font-size: 15px;
-  line-height: 1.6;
-
-  /* Glassmorphism */
-  backdrop-filter: blur(5px);
-  /* -webkit-backdrop-filter: blur(10px); */
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-}
-
-.right p,
-.right li {
-  color: #ccc;
-  margin: 10px 0;
-}
-
-.right p strong,
-.right li strong {
-  color: white;
-  font-size: 16px;
-}
-
-.right h3 {
-  color: #FFD369;
-  margin-top: 20px;
-}
-
-pre {
-  background-color: #141414;
-  padding: 10px;
-  border-radius: 4px;
-  overflow-x: auto;
-}
-
-/* Scrollbars - Default: Hidden */
+/* ========================
+   7. Scrollbars
+======================== */
 ::-webkit-scrollbar {
-  display: none;
-}
-body {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
+  display: none; /* Hide scrollbar (Chrome/Edge) */
 }
 
-/* Show scrollbars on tablets and phones */
+body {
+  scrollbar-width: none; /* Hide scrollbar (Firefox) */
+  -ms-overflow-style: none; /* Hide scrollbar (IE/Edge) */
+}
+
+/* Show scrollbars on tablets & phones */
 @media (max-width: 1024px) {
   body {
     overflow: auto;
@@ -158,19 +170,22 @@ body {
   }
 }
 
-/* Responsive Layout */
+/* ========================
+   8. Responsive Layout
+======================== */
 @media (max-width: 768px) {
   .main {
-    flex-direction: column;
+    flex-direction: column; /* Stack vertically */
     height: auto;
   }
-  .left, .right {
+  .left,
+  .right {
     min-height: 300px;
     width: 100%;
     margin: 10px 0;
   }
   .btnNormal {
-    width: 100%;
+    width: 100%; /* Full-width button */
     text-align: center;
   }
   .tabs {
@@ -181,7 +196,6 @@ body {
 
 @media (max-width: 480px) {
   .btnNormal {
-    
     font-size: 14px;
     padding: 8px 12px;
   }
@@ -199,13 +213,11 @@ body {
   }
 }
 
-
-
-
-
-/* === Light Mode Overrides === */
+/* ========================
+   9. Light Mode Overrides
+======================== */
 body.light .left {
-  background-color: #9696967b;
+  background-color: #9696967b; /* Light background */
   color: #1a1a1a;
 }
 
@@ -215,7 +227,7 @@ body.light .right {
 }
 
 body.light .btnNormal {
-  background-color: #007b83; /* darker teal for light mode */
+  background-color: #007b83; /* Dark teal for light mode */
   color: white;
 }
 
@@ -223,7 +235,7 @@ body.light .btnNormal:hover {
   background-color: #009aa5;
 }
 
-body.light .topTab p{
+body.light .topTab p {
   color: #1f1f1f;
 }
 
@@ -250,6 +262,3 @@ body.light pre {
   border-radius: 4px;
   overflow-x: auto;
 }
-
-
-

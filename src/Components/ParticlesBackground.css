@@ -1,0 +1,12 @@
+/* ========================
+   Particles Background
+======================== */
+
+#particles-js {
+  position: fixed;   /* Stick to the screen */
+  top: 0;
+  left: 0;
+  z-index: -1;       /* Always stay behind content */
+  width: 100%;       /* Full width */
+  height: 100vh;     /* Full viewport height */
+}

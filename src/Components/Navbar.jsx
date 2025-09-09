@@ -1,25 +1,38 @@
-import React from 'react'
-import "./Navbar.css"
-import { Bot, Sun, Moon } from 'lucide-react';
+import React from 'react' // Importing React
+import "./Navbar.css" // Importing styles for Navbar
+import { Bot, Sun, Moon } from 'lucide-react'; // Importing icons from lucide-react
+
+// Navbar component
+// Props:
+// - toggleTheme: function to switch between dark/light mode
+// - currentTheme: the current theme (dark or light)
 
 function Navbar({ toggleTheme, currentTheme }) {
   return (
-    <>
+    <> 
+      {/* Navigation bar container */}
       <div className="nav">
-        <div className="logo">CodeMedic
+        
+        {/* Logo section */}
+        <div className="logo">
+          CodeMedic
+          {/* Bot icon (branding) */}
           <Bot Landmark size={50} color='#00ADB5'/>
         </div>
 
+        {/* Theme toggle button */}
         <div onClick={toggleTheme} className="icon">
+          {/* Show Sun icon if theme = dark, otherwise Moon */}
           {currentTheme === 'dark' ? (
-          <Sun size={28} color="#ffffffff" />
-        ) : (
-          <Moon size={28} color="#ffffffff" />
-        )}
+            <Sun size={28} color="yellow" />
+          ) : (
+            <Moon size={28} color="black" />
+          )}
         </div>
       </div>
     </>
   )
 }
 
-export default Navbar
+// Exporting Navbar
+export default Navbar   

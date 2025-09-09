@@ -1,26 +1,27 @@
-import React, { useState, useEffect } from "react";
-import "./App.css";
-import Navbar from "./Components/Navbar";
-import Editor from "@monaco-editor/react";
-import Select, { useStateManager } from "react-select";
-import { GoogleGenAI } from "@google/genai";
-import ReactMarkdown from "react-markdown";
-import { PacmanLoader } from "react-spinners";
-import { Pointer, TextCursor } from "lucide-react";
-import ParticlesBackground from "./Components/ParticlesBackground";
-
+import React, { useState, useEffect } from "react"; // Importing React with hooks useState & useEffect
+import "./App.css"; // Importing stylesheet for App component
+import Navbar from "./Components/Navbar"; // Navbar component
+import Editor from "@monaco-editor/react"; // Monaco Editor for code editing
+import Select, { useStateManager } from "react-select"; // Dropdown menu for language selection
+import { GoogleGenAI } from "@google/genai"; // Google GenAI API client for AI-powered code review/fix
+import ReactMarkdown from "react-markdown"; // To render AI response in markdown format
+import { PacmanLoader } from "react-spinners"; // Loading spinner while waiting for AI response
+import ParticlesBackground from "./Components/ParticlesBackground"; // Animated particle background
 
 function App() {
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState("dark"); // State for current theme (dark/light)
 
   const toggleTheme = () => {
+    // Function to toggle theme
     const newTheme = theme === "dark" ? "light" : "dark";
     setTheme(newTheme);
   };
+
   useEffect(() => {
-    document.body.className = theme; // sets class="dark" or class="light"
+    document.body.className = theme; // Apply theme as body class whenever it changes
   }, [theme]);
 
+  // Language options for dropdown menu
   const options = [
     { value: "javascript", label: "JavaScript" },
     { value: "typescript", label: "TypeScript" },
@@ -44,6 +45,7 @@ function App() {
     { value: "shell", label: "Shell" },
   ];
 
+  // Custom styling for dropdown (dark mode theme)
   const darkStyles = {
     control: (base, state) => ({
       ...base,
@@ -60,7 +62,6 @@ function App() {
       ...base,
       backgroundColor: "#2c2c2c",
       color: "#fff",
-      // width: "200%",
     }),
     option: (base, state) => ({
       ...base,
@@ -88,26 +89,26 @@ function App() {
     }),
   };
 
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState(""); // State to store user-entered code
 
   const ai = new GoogleGenAI({
-    apiKey: "AIzaSyDsXVaOlB6dETIGx5tGJeO_rQWQ0RaJ1U8",
+    apiKey: "AIzaSyDsXVaOlB6dETIGx5tGJeO_rQWQ0RaJ1U8", // Google GenAI API key
   });
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // State for loader
+  const [response, setResponse] = useState(""); // State to store AI-generated response
 
-  const [response, setResponse] = useState("");
-
+  // Function to review code using AI
   async function reviewCode() {
-    setResponse("");
-    setLoading(true);
+    setResponse(""); // Reset previous response
+    setLoading(true); // Show loader
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       contents: `You are an expert-level software developer, skilled in writing efficient, clean, and advanced code.
 I’m sharing a piece of code written in ${selectedOption.value}.
 Your job is to deeply review this code and provide the following:
 
-1️⃣ A quality rating: Better, Good, Normal, or Bad.
+1️⃣ A quality rating: Bad, Good, Better and Best.
 2️⃣ Detailed suggestions for improvement, including best practices and advanced alternatives.
 3️⃣ A clear explanation of what the code does, step by step.
 4️⃣ A list of any potential bugs or logical errors, if found.
@@ -118,13 +119,14 @@ Analyze it like a senior developer reviewing a pull request.
 
 Code: ${code}`,
     });
-    setResponse(response.text);
-    setLoading(false);
+    setResponse(response.text); // Store AI response
+    setLoading(false); // Hide loader
   }
 
+  // Function to fix code using AI
   async function fixCode() {
-    setResponse("");
-    setLoading(true);
+    setResponse(""); // Reset response
+    setLoading(true); // Show loader
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       contents: `You are a senior software engineer. 
@@ -137,38 +139,37 @@ Please do the following:
 Code:
 ${code}`,
     });
-    setResponse(response.text);
-    setLoading(false);
+    setResponse(response.text); // Store AI response
+    setLoading(false); // Hide loader
   }
 
   const [selectedOption, setSelectedOption] = useState(
-    options[0] ?? { value: "javascript", label: "JavaScript" }
+    options[0] ?? { value: "javascript", label: "JavaScript" } // Default selected language is JavaScript
   );
 
   return (
     <>
-     
-      <Navbar toggleTheme={toggleTheme} currentTheme={theme} />
-      <ParticlesBackground theme={theme} />
-
+      <Navbar toggleTheme={toggleTheme} currentTheme={theme} />{" "}
+      {/* Navbar with theme toggle */}
+      <ParticlesBackground theme={theme} /> {/* Background effect */}
       <div className="main">
         <div className="left">
           <div className="tabs">
             <Select
-              value={selectedOption}
+              value={selectedOption} // Current selected language
               onChange={(e) => {
-                setSelectedOption(e);
+                setSelectedOption(e); // Update language
               }}
-              options={options}
-              styles={darkStyles}
+              options={options} // All available languages
+              styles={darkStyles} // Dark mode styles
             />
             <div className="btn">
               <button
                 onClick={() => {
                   if (code === "") {
-                    alert("Please enter the code first!");
+                    alert("Please enter the code first!"); // Alert if no code entered
                   } else {
-                    fixCode();
+                    fixCode(); // Call AI fix function
                   }
                 }}
                 className="btnNormal"
@@ -178,9 +179,9 @@ ${code}`,
               <button
                 onClick={() => {
                   if (code === "") {
-                    alert("Please enter the code first!");
+                    alert("Please enter the code first!"); // Alert if no code entered
                   } else {
-                    reviewCode();
+                    reviewCode(); // Call AI review function
                   }
                 }}
                 className="btnNormal"
@@ -189,17 +190,18 @@ ${code}`,
               </button>
             </div>
           </div>
+
           <Editor
             className="editor"
-            height="75vh"
-            theme={theme === "dark" ? "vs-dark" : "light"}
-            language={selectedOption.value}
-            value={code}
+            height="75vh" // Editor height
+            theme={theme === "dark" ? "vs-dark" : "light"} // Sync editor with app theme
+            language={selectedOption.value} // Editor language (from dropdown)
+            value={code} // User code
             onChange={(e) => {
-              setCode(e);
+              setCode(e); // Update code state
             }}
             options={{
-              fontFamily: "Fira Code, Consolas, 'Courier New', monospace",
+              fontFamily: "Fira Code, Consolas, 'Courier New', monospace", // Font for editor
               fontLigatures: true,
               fontSize: 16,
               suggest: {
@@ -210,30 +212,27 @@ ${code}`,
               wordBasedSuggestions: true,
               renderLineHighlight: "all",
               renderWhitespace: "all",
-              minimap: { enabled: false },
-              // 🔽 Fix rendering issue
-              fixedOverflowWidgets: true,
+              minimap: { enabled: false }, // Disable minimap
+              fixedOverflowWidgets: true, // Fix rendering issue
             }}
           />
         </div>
 
         <div className="right">
           <div className="topTab">
-            <p>Response :</p>
+            <p>Response :</p> {/* Response section */}
           </div>
-
-          {loading && (
+          {loading && ( // Show loader while AI processes
             <PacmanLoader
               size={20}
               color={theme === "dark" ? "#ffffffff" : "#000000ff"}
             />
           )}
-
-          <ReactMarkdown>{response}</ReactMarkdown>
+          <ReactMarkdown>{response}</ReactMarkdown> {/* Render AI response */}
         </div>
       </div>
     </>
   );
 }
 
-export default App;
+export default App; // Export App component
