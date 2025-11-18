@@ -92,7 +92,7 @@ function App() {
   const [code, setCode] = useState(""); // State to store user-entered code
 
   const ai = new GoogleGenAI({
-    apiKey: "YOUR_API_KEY_HERE", // Google GenAI API key
+    apiKey: "AIzaSyBEcywnKwCK5i8ks_MseSiVdttonSgfk4c", // Google GenAI API key
   });
 
   const [loading, setLoading] = useState(false); // State for loader
