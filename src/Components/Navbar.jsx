@@ -17,7 +17,7 @@ function Navbar({ toggleTheme, currentTheme }) {
         <div className="logo">
           CodeMedic
           {/* Bot icon (branding) */}
-          <Bot Landmark size={50} color='#00ADB5'/>
+          <Bot size={50} color='#00ADB5'/>
         </div>
 
         {/* Theme toggle button */}
