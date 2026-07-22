@@ -1,4 +1,5 @@
-// api/review.js
+import dotenv from "dotenv";
+dotenv.config({ path: ".env.local" });
 import OpenAI from "openai";
 
 // Initialize OpenAI client
@@ -6,7 +7,7 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// Retry helper for stability
+// Retry helper
 async function withRetries(fn, attempts = 3, delay = 1000) {
   let i = 0;
   while (i < attempts) {
@@ -15,7 +16,9 @@ async function withRetries(fn, attempts = 3, delay = 1000) {
     } catch (err) {
       i++;
       if (i >= attempts) throw err;
-      await new Promise((r) => setTimeout(r, delay * 2 ** (i - 1)));
+      await new Promise((resolve) =>
+        setTimeout(resolve, delay * Math.pow(2, i - 1))
+      );
     }
   }
 }
@@ -33,37 +36,56 @@ export default async function handler(req, res) {
     }
 
     const prompt = `
-You are an expert-level software developer.
+You are an expert-level senior software developer.
 
 Review the following ${language} code and provide:
 
-1. Code quality rating (Bad, Good, Better, Best)
-2. Improvement suggestions using best practices
-3. Step-by-step explanation of what the code does
-4. List of potential bugs or logical issues
-5. Syntax or runtime errors
-6. Correct solutions with improved formatted code
+1. Code quality rating (Bad / Good / Better / Best)
+2. Detailed suggestions for improving readability & performance
+3. Explanation of what the code does (step-by-step)
+4. List of potential bugs or logical errors
+5. List of syntax or runtime errors
+6. Provide corrected solutions with properly formatted code
 
 Code:
 ${code}
 `;
 
+    // NEW OpenAI v4 syntax (Responses API)
     const run = () =>
-      client.chat.completions.create({
-        model: "o4-mini",
-        temperature: 0.2,
-        messages: [{ role: "user", content: prompt }],
-        max_tokens: 2000,
+      client.responses.create({
+        model: "gpt-4o-mini",
+        input: prompt,
       });
 
     const completion = await withRetries(run, 3, 1200);
 
-    const text = completion?.choices?.[0]?.message?.content || "No response.";
+    // UNIVERSAL response extractor (works for ALL OpenAI output formats)
+    let text = "";
 
-    res.status(200).json({ text });
+    // 1. Direct text (best case)
+    if (completion?.output_text) {
+      text = completion.output_text;
+    }
+
+    // 2. Modern content-block format
+    else if (completion?.output && Array.isArray(completion.output)) {
+      text = completion.output
+        .map((block) =>
+          block.content?.map((c) => c.text).join("\n")
+        )
+        .join("\n");
+    }
+
+    // 3. Fallback
+    else {
+      text = "No formatted response received.";
+    }
+
+    return res.status(200).json({ text });
   } catch (error) {
     console.error("REVIEW API ERROR:", error);
-    res.status(500).json({
+    return res.status(500).json({
       error: "Server error reviewing code.",
       details: error.message,
     });
