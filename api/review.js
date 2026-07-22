@@ -2,6 +2,8 @@ import dotenv from "dotenv";
 dotenv.config({ path: ".env.local" });
 import OpenAI from "openai";
 
+console.log("OPENAI_API_KEY exists:", !!process.env.OPENAI_API_KEY);
+
 // Initialize OpenAI client
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
