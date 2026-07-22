@@ -87,7 +87,7 @@ function App() {
   };
 
   const [selectedOption, setSelectedOption] = useState(
-    options[0] || { value: "javascript", label: "JavaScript" }
+    options[0] || { value: "javascript", label: "JavaScript" },
   );
 
   // ===========================
@@ -168,16 +168,10 @@ function App() {
               styles={darkStyles}
             />
             <div className="btn">
-              <button
-                onClick={fixCode}
-                className="btnNormal"
-              >
+              <button onClick={fixCode} className="btnNormal">
                 Fix Code
               </button>
-              <button
-                onClick={reviewCode}
-                className="btnNormal"
-              >
+              <button onClick={reviewCode} className="btnNormal">
                 Review
               </button>
             </div>
