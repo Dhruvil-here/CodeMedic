@@ -1,12 +1,11 @@
 import dotenv from "dotenv";
 dotenv.config({ path: ".env.local" });
-import OpenAI from "openai";
 
-console.log("OPENAI_API_KEY exists:", !!process.env.OPENAI_API_KEY);
-
+import { GoogleGenAI } from "@google/genai";
 // Initialize OpenAI client
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY,
 });
 
 // Retry helper
@@ -19,7 +18,7 @@ async function withRetries(fn, attempts = 3, delay = 1000) {
       i++;
       if (i >= attempts) throw err;
       await new Promise((resolve) =>
-        setTimeout(resolve, delay * Math.pow(2, i - 1))
+        setTimeout(resolve, delay * Math.pow(2, i - 1)),
       );
     }
   }
@@ -38,51 +37,79 @@ export default async function handler(req, res) {
     }
 
     const prompt = `
-You are an expert-level senior software developer.
+You are CodeMedic AI, an expert Senior Software Engineer, Technical Lead, and Code Reviewer with 15+ years of experience.
 
-Review the following ${language} code and provide:
+Analyze the following ${language} code thoroughly.
 
-1. Code quality rating (Bad / Good / Better / Best)
-2. Detailed suggestions for improving readability & performance
-3. Explanation of what the code does (step-by-step)
-4. List of potential bugs or logical errors
-5. List of syntax or runtime errors
-6. Provide corrected solutions with properly formatted code
+Provide your response using EXACTLY the following format.
+
+# Overall Rating
+Give one of:
+⭐ Bad
+⭐⭐ Fair
+⭐⭐⭐ Good
+⭐⭐⭐⭐ Very Good
+⭐⭐⭐⭐⭐ Excellent
+
+Also give a score out of 10.
+
+# Summary
+Briefly explain what the code is trying to accomplish.
+
+# Step-by-Step Explanation
+Explain the code line-by-line or block-by-block in simple language suitable for beginner to intermediate developers.
+
+# Strengths
+List everything that is implemented correctly.
+
+# Problems Found
+Identify:
+- Syntax errors
+- Logical errors
+- Runtime issues
+- Edge cases
+- Security issues
+- Memory issues
+- Performance bottlenecks
+
+If none exist, explicitly state "No major issues found."
+
+# Best Practices
+Mention coding standards that should be improved.
+
+Examples:
+- Naming conventions
+- Readability
+- Modularization
+- Reusability
+- Error handling
+- Input validation
+
+# Time Complexity
+Estimate Big-O complexity.
+
+# Space Complexity
+Estimate memory complexity.
+
+# Optimized Version
+Provide an improved version of the code.
+
+Return ONLY markdown.
 
 Code:
+
 ${code}
 `;
 
-    // NEW OpenAI v4 syntax (Responses API)
     const run = () =>
-      client.responses.create({
-        model: "gpt-4o-mini",
-        input: prompt,
+      ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: prompt,
       });
 
-    const completion = await withRetries(run, 3, 1200);
+    const response = await withRetries(run, 3, 1200);
 
-    // UNIVERSAL response extractor (works for ALL OpenAI output formats)
-    let text = "";
-
-    // 1. Direct text (best case)
-    if (completion?.output_text) {
-      text = completion.output_text;
-    }
-
-    // 2. Modern content-block format
-    else if (completion?.output && Array.isArray(completion.output)) {
-      text = completion.output
-        .map((block) =>
-          block.content?.map((c) => c.text).join("\n")
-        )
-        .join("\n");
-    }
-
-    // 3. Fallback
-    else {
-      text = "No formatted response received.";
-    }
+    const text = response.text || "No response received.";
 
     return res.status(200).json({ text });
   } catch (error) {

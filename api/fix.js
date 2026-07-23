@@ -1,11 +1,11 @@
 import dotenv from "dotenv";
 dotenv.config({ path: ".env.local" });
 
-import OpenAI from "openai";
+import { GoogleGenAI } from "@google/genai";
 
 // Initialize OpenAI client
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY,
 });
 
 // Retry helper
@@ -33,43 +33,43 @@ export default async function handler(req, res) {
     }
 
     const prompt = `
-You are a highly skilled senior software engineer.
+You are CodeMedic AI, an expert software engineer.
 
-Fix and improve the following ${language} code:
+Fix the following ${language} code.
 
-- Correct ALL syntax, logical, and runtime errors
-- Optimize readability, performance, and structure
-- Use modern best practices
-- Return ONLY the corrected code (no explanations)
+Rules:
+
+- Fix ALL syntax errors.
+- Fix ALL logical errors.
+- Fix ALL runtime errors.
+- Improve performance whenever possible.
+- Preserve the original functionality.
+- Use modern language features.
+- Follow clean code principles.
+- Add meaningful comments only where necessary.
+- Keep formatting consistent.
+- Do NOT remove functionality unless it is incorrect.
+
+Return ONLY the corrected code.
+
+Do NOT explain anything.
+
+Do NOT wrap the response in markdown.
 
 Code:
+
 ${code}
 `;
 
-    // OpenAI Responses API call
     const run = () =>
-      client.responses.create({
-        model: "gpt-4o-mini",
-        input: prompt,
-        max_output_tokens: 2000,
+      ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: prompt,
       });
 
-    const completion = await withRetries(run);
+    const response = await withRetries(run);
 
-    // ---- Safe Output Extraction ----
-    let text = "No response.";
-
-    if (completion?.output_text) {
-      text = completion.output_text;
-    } else if (completion?.output?.length) {
-      text = completion.output
-        .map((block) =>
-          block.content
-            ?.map((item) => (item.text ? item.text : ""))
-            .join("\n")
-        )
-        .join("\n");
-    }
+    const text = response.text;
 
     return res.status(200).json({ text });
   } catch (error) {
